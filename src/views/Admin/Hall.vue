@@ -14,9 +14,9 @@
             data-bs-toggle="offcanvas"
             data-bs-target="#hallFormOffcanvas"
             @click="openAddHallForm"
-           
+           v-if="$hasPermission('/add-hall','POST')"
         >
-          <i class="bi bi-plus-lg me-2"></i> Add New Hall
+          <i class="bi bi-plus-lg me-2" ></i> Add New Hall
         </button>
       </div>
     </div>

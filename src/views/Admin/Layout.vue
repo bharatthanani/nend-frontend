@@ -17,7 +17,7 @@
         </router-link>
 
         
-        <router-link v-if="hasPermission('/user-list', 'GET')" :to="{ name: 'Users'}" class="nav-link">
+        <router-link v-if="$hasPermission('/user-list', 'GET')" :to="{ name: 'Users'}" class="nav-link">
           <i class="bi bi-people"></i> &nbsp;Users
         </router-link>
 
@@ -30,7 +30,7 @@
             <i class="bi bi-credit-card"></i>  &nbsp;Village/City
           </summary>
           <div class="submenu">
-            <router-link to="village" class="nav-link">Active</router-link>
+            <router-link v-if="$hasPermission('/get-village', 'GET')" :to="{ name: 'Village'}" class="nav-link">Active</router-link>
             <router-link to="villages?status=inactive" class="nav-link">De-Active</router-link>
           </div>
         </details>
@@ -40,7 +40,7 @@
             <i class="bi bi-credit-card"></i>  &nbsp;Event
           </summary>
           <div class="submenu">
-            <router-link to="event" class="nav-link">Active Event</router-link>
+            <router-link v-if="$hasPermission('/get-events', 'GET')"  to="event" class="nav-link">Active Event</router-link>
             <router-link to="event-detail" class="nav-link">Event Detail</router-link>
           </div>
         </details>
@@ -50,7 +50,7 @@
             <i class="bi bi-credit-card"></i>  &nbsp;Hall Management
           </summary>
           <div class="submenu">
-            <router-link to="hall" class="nav-link">List</router-link>
+            <router-link v-if="$hasPermission('/get-hall', 'GET')"  :to="{ name: 'Hall'}" class="nav-link">List</router-link>
             <router-link to="book-hall" class="nav-link">Book Hall</router-link>
           </div>
         </details>
@@ -150,26 +150,26 @@ export default {
       localStorage.removeItem('user')
       this.$router.push('/login')
     },
-    async fetchPermissions() {
-      const res = await fetch('http://localhost:3000/api/permissions', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-      const data = await res.json();
-      if (data.success) {
-        this.permissions = data.permissions; // [{path, method}, ...]
-      }
-    },
-    hasPermission(path, method) {
-      return this.permissions.some(p => p.path === path && p.method === method);
-    }
+    // async fetchPermissions() {
+    //   const res = await fetch('http://localhost:3000/api/permissions', {
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.getItem('token')}`
+    //     }
+    //   });
+    //   const data = await res.json();
+    //   if (data.success) {
+    //     this.permissions = data.permissions; // [{path, method}, ...]
+    //   }
+    // },
+    // hasPermission(path, method) {
+    //   return this.permissions.some(p => p.path === path && p.method === method);
+    // }
   
   },
 
    async created() {
     // Page load hote hi localStorage se user data load kar lo
-     await this.fetchPermissions();
+    //  await this.fetchPermissions();
     const savedUser = localStorage.getItem('user')
     if (savedUser) {
       this.user = JSON.parse(savedUser)

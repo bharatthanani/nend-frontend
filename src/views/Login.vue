@@ -35,6 +35,7 @@
 
 <script>
 import userService from '@/services/userService.js' 
+import { fetchPermissions } from '@/utils/permissionService'
 export default{
    data(){
       return{
@@ -70,6 +71,7 @@ export default{
         if (result.user) {
           localStorage.setItem('user', JSON.stringify(result.user))
         }
+        await fetchPermissions();
         this.$router.push('/admin/dashboard')
         // Form reset
         this.form = {

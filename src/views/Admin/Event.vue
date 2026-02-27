@@ -5,7 +5,7 @@
       <h4 class="mb-0">
         <i class="bi bi-calendar-heart me-2"></i> Wedding Event Management
       </h4>
-      <button class="btn btn-primary btn-sm" data-bs-toggle="offcanvas" @click="onCanvasOpen" data-bs-target="#addEventForm">
+      <button class="btn btn-primary btn-sm" data-bs-toggle="offcanvas" @click="onCanvasOpen" v-if="$hasPermission('/add-event','POST')" data-bs-target="#addEventForm">
         <i class="bi bi-plus-circle me-1"></i> Add New Event
       </button>
     </div>
@@ -234,7 +234,7 @@
     },
     created()
     {
-
+      this.getEventData();
     },
     mounted() {
      
@@ -329,6 +329,18 @@
          {
             console.log(error);
          }
+      },
+      async getEventData()
+      {
+        try{
+          const response = await userService.getEvents();
+          this.events = response.data ? [response.data] : [];
+          console.log("working", response.data);
+
+        }catch(error)
+        {
+        console.log(error);
+        }
       }
     }
   }
