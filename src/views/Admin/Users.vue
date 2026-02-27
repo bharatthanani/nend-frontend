@@ -24,9 +24,9 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Father Name</th>
+                <th>Gender</th>
                 <th>Email</th>
                 <th>City/Village</th>
-                <th>Profile</th>
                 <th>Role</th>
                 <th>Status</th>
                 <th class="text-center">Actions</th>
@@ -38,13 +38,10 @@
                 <td>{{ user.first_name }}</td>
                 <td>{{ user.last_name }}</td>
                 <td>{{ user.father?.first_name || '' }}</td>
+                <td>{{ user.gender }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.village?.village_name || '' }}</td>
-                <td>
-                  <img :src="'http://localhost:3000/' + user.profile" alt="Profile Image" width="80">
-                </td>
-
-
+               
                 <td><span class="badge bg-primary">{{ user.role }}</span></td>
                 <td>
                   <span v-if="user.is_verified == 1" class="badge bg-success">

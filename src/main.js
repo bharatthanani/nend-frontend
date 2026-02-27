@@ -8,6 +8,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 
 import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
+import { hasPermission } from './utils/permission';
 
 
 import './assets/main.css'
@@ -21,6 +22,7 @@ app.use(Toast, {
   closeOnClick: true,
   pauseOnHover: true
 });
+app.config.globalProperties.$hasPermission = hasPermission;
 app.use(router)   // ✅ Correct way
 
 app.mount('#app')

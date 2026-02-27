@@ -1,5 +1,6 @@
 // src/services/userService.js → FINAL VERSION
 import api from './api'
+import router from '@/router'; 
 
 const userService = {
   async register(userData) {
@@ -100,6 +101,16 @@ const userService = {
       return response;
     }catch(error){
       throw error.response?.data || { message: 'Something went wrong please try again' }
+    }
+  },
+  async getEvents(){
+    try{
+      const response = await api.get('/api/get-events');
+      return response.data;
+    }catch(error)
+    {
+      router.push('/admin/forbidden'); 
+     throw error.response?.data || { message: 'Something went wrong please try again' }
     }
   },
   async getGrooms()

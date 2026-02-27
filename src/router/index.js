@@ -16,6 +16,7 @@ import BookHall from "@/views/Admin/BookHall.vue";
 import Hall from "@/views/Admin/Hall.vue";
 import HallDetail from '@/views/Admin/HallDetail.vue'
 import Otp from '@/views/Otp.vue'
+import Forbidden from '@/views/Admin/Forbidden.vue';
 
 
 const routes = [
@@ -31,14 +32,15 @@ const routes = [
       { path: 'paypal', component: Paypal, meta: { requiresAuth: true }  },
       { path: 'users', name:'Users', component: Users, meta: { requiresAuth: true }  },
       { path: 'profile', name:'Profile', component: Profile, meta: { requiresAuth: true }  },
-      { path: 'village', component: Village, meta: { requiresAuth: true }  },
+      { path: 'village', name:"Village", component: Village,  meta: { requiresAuth: true }  },
       { path: 'event', component: Event, meta: { requiresAuth: true }  },
       { path: 'event-detail', component: EventDetail , meta: { requiresAuth: true } },
       { path: 'calendar', component: Calendar, meta: { requiresAuth: true }  },
       { path: 'user-detail/:id', name:'userDetail', component: UserDetail, meta: { requiresAuth: true }  },
       { path: 'book-hall', component: BookHall, meta: { requiresAuth: true }  },
-      { path: 'hall', component: Hall, meta: { requiresAuth: true }  },
+      { path: 'hall', name:"Hall", component: Hall, meta: { requiresAuth: true }  },
       { path: 'hall-detail/:id', name:'hallDetail', component: HallDetail, meta: { requiresAuth: true }  },
+      { path: 'forbidden', name:"Forbidden", component: Forbidden, meta: { requiresAuth: true }  },
       // You can add more admin routes here
     ]
   }
