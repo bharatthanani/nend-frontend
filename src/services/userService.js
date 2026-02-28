@@ -55,6 +55,18 @@ const userService = {
       }
   },
 
+  async getUserDetail(id)
+  {
+    try{
+        const response = await api.get(`/api/get-user-detail/${id}`);
+        return response.data;
+    }catch(error)
+    {
+    //  router.push('/admin/forbidden'); 
+     throw error.response?.data || { message: 'Something went wrong please try again' }
+    }
+  },
+
   async addUser(userData) {
     try {
     const response = await api.post('/api/add-user', userData)
@@ -110,6 +122,17 @@ const userService = {
     }catch(error)
     {
       router.push('/admin/forbidden'); 
+     throw error.response?.data || { message: 'Something went wrong please try again' }
+    }
+  },
+  async getEventDetail(id)
+  {
+    try{
+        const response = await api.get(`/api/get-event-detail/${id}`);
+        return response.data;
+    }catch(error)
+    {
+     router.push('/admin/forbidden'); 
      throw error.response?.data || { message: 'Something went wrong please try again' }
     }
   },

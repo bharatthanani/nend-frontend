@@ -21,7 +21,7 @@
           <i class="bi bi-people"></i> &nbsp;Users
         </router-link>
 
-        <router-link to="calendar" class="nav-link">
+        <router-link :to="{ name:'Calendar' }" class="nav-link">
           <i class="bi bi-calendar-event"></i>  &nbsp;Calendar
         </router-link>
 
@@ -35,13 +35,12 @@
           </div>
         </details>
 
-        <details>
+        <details v-if="$hasPermission('/get-events', 'GET')">
           <summary>
             <i class="bi bi-credit-card"></i>  &nbsp;Event
           </summary>
           <div class="submenu">
-            <router-link v-if="$hasPermission('/get-events', 'GET')"  to="event" class="nav-link">Active Event</router-link>
-            <router-link to="event-detail" class="nav-link">Event Detail</router-link>
+            <router-link v-if="$hasPermission('/get-events', 'GET')"  :to="{ name:'Event' }" class="nav-link">Active Event</router-link>
           </div>
         </details>
 
@@ -51,7 +50,7 @@
           </summary>
           <div class="submenu">
             <router-link v-if="$hasPermission('/get-hall', 'GET')"  :to="{ name: 'Hall'}" class="nav-link">List</router-link>
-            <router-link to="book-hall" class="nav-link">Book Hall</router-link>
+            <router-link :to="{ name: 'BookHall' }" class="nav-link">Book Hall</router-link>
           </div>
         </details>
 

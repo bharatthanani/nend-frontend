@@ -25,14 +25,14 @@
 
             <div class="col-md-6 mb-3">
               <h6 class="text-muted">Groom (Dulha)</h6>
-              <p class="fw-semibold fs-5 mb-1">Ahmed Khan</p>
-              <p class="text-secondary mb-0">Father: <strong>Shabbir Khan</strong></p>
+              <p class="fw-semibold fs-5 mb-1" v-if="eventData?.groom">{{  eventData?.groom.first_name }} {{  eventData?.groom.last_name }}</p>
+              <p class="text-secondary mb-0" v-if="eventData?.groom.father">Father: <strong>{{ eventData?.groom.father.first_name }} {{ eventData?.groom.father.last_name }}</strong></p>
             </div>
 
             <div class="col-md-6 mb-3">
               <h6 class="text-muted">Bride (Dulhan)</h6>
-              <p class="fw-semibold fs-5 mb-1">Ayesha Tariq</p>
-              <p class="text-secondary mb-0">Father: <strong>Tariq Hussain</strong></p>
+              <p class="fw-semibold fs-5 mb-1" v-if="eventData?.bride"> {{  eventData?.bride.first_name }} {{ eventData?.bride.last_name }}</p>
+              <p class="text-secondary mb-0" v-if="eventData?.bride.father">Father: <strong>{{ eventData?.bride.father.first_name }} {{ eventData?.bride.father.last_name }}</strong></p>
             </div>
 
           </div>
@@ -49,22 +49,22 @@
 
             <div class="col-md-4 mb-3">
               <h6 class="text-muted">Event Type</h6>
-              <p class="fw-semibold">Barat</p>
+              <p class="fw-semibold">{{ eventData?.event_type }}</p>
             </div>
 
             <div class="col-md-4 mb-3">
               <h6 class="text-muted">Event Date</h6>
-              <p class="fw-semibold">12 December 2025</p>
+              <p class="fw-semibold">{{ formatDate(eventData?.event_date) }}</p>
             </div>
 
             <div class="col-md-4 mb-3">
               <h6 class="text-muted">Event Time</h6>
-              <p class="fw-semibold">08:00 PM</p>
+              <p class="fw-semibold">{{ formatTime(eventData?.event_time) }}</p>
             </div>
 
             <div class="col-md-12 mb-3">
               <h6 class="text-muted">Venue / Location</h6>
-              <p class="fw-semibold fs-6">Royal Palace Banquet Hall, Karachi</p>
+              <p class="fw-semibold fs-6">{{ eventData?.location }}</p>
             </div>
 
           </div>
@@ -78,9 +78,7 @@
             </h5>
           </div>
           <div class="card-body">
-            <div class="alert alert-light border">
-              Bride arrival at 7:30 PM. Photographer: XYZ Studio.
-              Car decoration required. Catering confirmed for 250 guests.
+            <div class="alert alert-light border">{{ eventData?.additional_note }}.
             </div>
           </div>
         </div>
@@ -99,16 +97,16 @@
 
             <ul class="list-group mb-3">
               <li class="list-group-item d-flex justify-content-between">
-                <span>Event Type:</span> <strong>Barat</strong>
+                <span>Event Type:</span> <strong>{{  eventData?.event_type }}</strong>
               </li>
               <li class="list-group-item d-flex justify-content-between">
-                <span>Date:</span> <strong>12 Dec 2025</strong>
+                <span>Date:</span> <strong>{{ formatDate(eventData?.event_date) }}</strong>
               </li>
               <li class="list-group-item d-flex justify-content-between">
-                <span>Guests:</span> <strong>250</strong>
+                <span>Guests:</span> <strong>{{ eventData?.number_of_guest }}</strong>
               </li>
               <li class="list-group-item d-flex justify-content-between">
-                <span>Contact:</span> <strong>0312-3456789</strong>
+                <span>Contact:</span> <strong>{{ eventData?.contact_number }}</strong>
               </li>
             </ul>
 
@@ -130,3 +128,31 @@
     </div>
   </div>
 </template>
+<script setup>
+import userService from '@/services/userService';
+import { formatDate, formatTime } from '@/utils/helper';
+import {ref , onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const eventId = route.params.id;
+
+const eventData = ref(null);
+const loading = ref(false);
+
+const getEventDetail =  async () => {
+    loading.value = true;
+   try{
+      const response = await userService.getEventDetail(eventId);
+      eventData.value = response.data;
+   }catch(error)
+   {
+     console.log(error,'Something went wrong');
+
+   }finally{
+      loading.value = false;
+   }
+};
+onMounted(() => {
+ getEventDetail();
+});
+</script>

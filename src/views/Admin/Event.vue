@@ -31,32 +31,17 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>1</td>
-            <td class="fw-semibold">Ahmed</td>
-            <td>Ayesha</td>
-            <td><span class="badge bg-primary">Barat</span></td>
-            <td>12 Dec 2025</td>
-            <td>Karachi</td>
-            <td class="text-center">
-              <button class="btn btn-sm btn-outline-primary me-1">
-                <i class="bi bi-pencil"></i>
-              </button>
-              <button class="btn btn-sm btn-outline-danger">
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-          </tr>
 
-          <tr>
-            <td>2</td>
-            <td class="fw-semibold">Bilal</td>
-            <td>Hina</td>
-            <td><span class="badge bg-success">Walima</span></td>
-            <td>15 Dec 2025</td>
-            <td>Lahore</td>
+          <tr v-for="event in events">
+            <td>{{ event.id }}</td>
+            <td class="fw-semibold" v-if="event.groom">{{ event.groom.first_name }} {{ event.groom.last_name }}</td>
+            <td v-if="event.bride">{{ event.bride.first_name }} {{ event.bride.last_name }}</td>
+            <td><span class="badge bg-primary">{{ event.event_type }}</span></td>
+            <td>{{ formatDate(event.event_date) }}</td>
+            <td>{{ event.location }}</td>
             <td class="text-center">
-              <button class="btn btn-sm btn-outline-primary me-1">
+            <router-link :to="{ name: 'EventDetail', params: { id: event.id } }"  class="btn btn-sm btn-success me-1"><i class="bi bi-eye-fill"></i></router-link>
+            <button class="btn btn-sm btn-outline-primary me-1">
                 <i class="bi bi-pencil"></i>
               </button>
               <button class="btn btn-sm btn-outline-danger">
@@ -199,6 +184,9 @@
     </div>
   </div>
 </template>
+<script setup>
+import { formatDate, formatTime } from '@/utils/helper'
+</script>
 <script>
   import userService from '@/services/userService';
   import { useToast } from 'vue-toastification';
@@ -207,7 +195,7 @@
     data()
     {
       return{
-         events: [],
+         events: null,
          birdes_list: [],
          grooms_list: [],
          groom_father: null,
@@ -334,14 +322,14 @@
       {
         try{
           const response = await userService.getEvents();
-          this.events = response.data ? [response.data] : [];
+          this.events = response.data;
           console.log("working", response.data);
 
         }catch(error)
         {
         console.log(error);
         }
-      }
+      },
     }
   }
 </script>

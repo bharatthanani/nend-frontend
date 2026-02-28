@@ -13,7 +13,7 @@
     <div class="card premium-card mb-4">
       <div class="card-body p-4 d-flex align-items-center">
 
-        <img src="https://via.placeholder.com/100" class="user-avatar-lg" />
+        <img src="https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="user-avatar-lg" />
 
         <div class="ms-4">
           <h3 class="user-name">Muhammad Ahmed</h3>
@@ -130,59 +130,98 @@
 
   </div>
 </template>
+
+<script setup>
+ import userService from '@/services/userService';
+ import { ref , onMounted} from 'vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const userId = route.params.id;
+const userData = ref(null);
+const getUserDetail = async () => {
+  try{
+    const response = await userService.getUserDetail(userId);
+    userData.value = response.data;
+
+  }catch(error)
+  {
+    console.log("Error found", error)
+  }finally{
+
+  }
+};
+
+onMounted(() => {
+  getUserDetail();
+})
+
+
+</script>
 <style>
-/* GLOBAL PREMIUM BG */
+/* PREMIUM BACKGROUND */
 .premium-bg {
-  background: #f8f9fb;
+  background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+  min-height: 100vh;
 }
 
-/* HEADERS */
+/* PAGE TITLE */
 .page-title {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
-  color: #1f2937;
+  color: #1e293b;
+  letter-spacing: 0.5px;
 }
 
 /* PREMIUM BUTTON */
 .btn-premium-dark {
-  background: #111827;
+  background: linear-gradient(135deg, #111827, #374151);
   color: white;
-  padding: 6px 14px;
-  border-radius: 10px;
+  padding: 8px 18px;
+  border-radius: 12px;
+  border: none;
+  transition: 0.3s ease;
 }
 
 .btn-premium-dark:hover {
-  background: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
 }
 
-/* CARD STYLING */
+/* CARD */
 .premium-card {
   border: 0;
-  border-radius: 16px;
-  box-shadow: 0px 6px 24px rgba(0,0,0,0.08);
-  background: white;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  transition: 0.3s ease;
 }
 
+.premium-card:hover {
+  transform: translateY(-3px);
+}
+
+/* CARD HEADER */
 .premium-card-header {
-  background: transparent;
-  border: 0;
-  padding: 20px 24px 0;
   font-size: 20px;
   font-weight: 700;
+  padding: 25px 25px 10px;
   color: #111827;
 }
 
-/* PROFILE */
+/* AVATAR */
 .user-avatar-lg {
-  width: 100px;
-  height: 100px;
-  border-radius: 14px;
+  width: 110px;
+  height: 110px;
+  border-radius: 20px;
   object-fit: cover;
-  box-shadow: 0 4px 22px rgba(0,0,0,0.15);
+  border: 4px solid white;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
 }
 
+/* USER TEXT */
 .user-name {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
   color: #0f172a;
 }
@@ -190,19 +229,20 @@
 .user-subtitle {
   color: #6b7280;
   font-size: 15px;
+  margin-bottom: 6px;
 }
 
-/* BADGE / STATUS */
+/* STATUS CHIP */
 .status-chip {
-  padding: 4px 12px;
-  border-radius: 100px;
+  padding: 6px 16px;
+  border-radius: 50px;
   font-size: 12px;
   font-weight: 600;
-  display: inline-block;
+  letter-spacing: 0.4px;
 }
 
 .status-chip.active {
-  background: #16a34a;
+  background: linear-gradient(135deg, #16a34a, #22c55e);
   color: white;
 }
 
@@ -220,56 +260,66 @@
 .info-label {
   font-size: 12px;
   font-weight: 600;
-  text-transform: uppercase;
   color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 4px;
 }
 
 .info-value {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 600;
   color: #111827;
 }
 
 .info-desc {
-  font-size: 15px;
-  color: #4b5563;
-  line-height: 1.5;
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.6;
 }
 
 /* INFO BOX */
 .info-box {
-  background: #f9fafb;
-  border-radius: 12px;
-  padding: 18px;
-  border-left: 4px solid #d1d5db;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid #e5e7eb;
 }
 
 /* FAMILY SECTION */
 .section-title {
   font-weight: 700;
+  font-size: 18px;
   color: #1e293b;
+  margin-bottom: 15px;
 }
 
 .family-item {
-  padding: 14px 0;
+  padding: 16px;
+  border-radius: 14px;
+  transition: 0.3s;
+}
+
+.family-item:hover {
+  background: #f9fafb;
 }
 
 .family-details-box {
-  background: #f9fafb;
-  padding: 15px;
-  border-radius: 12px;
-  border-left: 4px solid #d1d5db;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 14px;
   margin-top: 12px;
+  border: 1px solid #e5e7eb;
 }
 
 .member-name {
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   color: #111827;
 }
 
 .divider {
-  margin: 30px 0;
+  margin: 35px 0;
   border-color: #e5e7eb;
 }
 

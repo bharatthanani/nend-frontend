@@ -14,10 +14,9 @@
 
 <style scoped>
 .forbidden-page {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
-  height: 100vh; /* full viewport height */
   background-color: #f9f9f9;
 }
 

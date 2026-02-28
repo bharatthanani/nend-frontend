@@ -23,6 +23,6 @@ app.use(Toast, {
   pauseOnHover: true
 });
 app.config.globalProperties.$hasPermission = hasPermission;
-app.use(router)   // ✅ Correct way
+app.use(router) 
 
 app.mount('#app')
